@@ -16,20 +16,20 @@ def compute_basic_stats(df, columns):
 # Histogram över systoliskt blodtryck
 # ---------------------------------------------------
 def plot_bp_hist(df):
-    fig, ax = plt.subplots(figsize=(8,5))  # Skapar figur och ax
-    bp = df['systolic_bp'].dropna()        # Tar bort saknade värden
-    ax.hist(bp, bins=20, color='skyblue', edgecolor='black')  # Ritar histogram
+    fig, ax = plt.subplots(figsize=(8,5))  
+    bp = df['systolic_bp'].dropna()       
+    ax.hist(bp, bins=20, color='skyblue', edgecolor='black') 
     ax.set_title("Histogram av systoliskt blodtryck")
     ax.set_xlabel("Blodtryck")
     ax.set_ylabel("Antal deltagare")
-    ax.grid(True, axis='y', linestyle='--', alpha=0.7)        # Grid
+    ax.grid(True, axis='y', linestyle='--', alpha=0.7)       
     plt.tight_layout()
     plt.show() 
 
 # Boxplot för vikt per kön
 def plot_weight_boxplot(df):
     fig, ax = plt.subplots(figsize=(8,5))
-    df_box = df[['weight','sex']].dropna()                     # Tar bort saknade
+    df_box = df[['weight','sex']].dropna()                    
     df_box.boxplot(column='weight', by='sex', ax=ax, patch_artist=True,
                    boxprops=dict(facecolor='lightgreen', color='black'),
                    medianprops=dict(color='red'),
@@ -39,7 +39,7 @@ def plot_weight_boxplot(df):
     ax.set_xlabel("Kön")
     ax.set_ylabel("Vikt (kg)")
     ax.grid(True, axis='y', linestyle='--', alpha=0.7)
-    plt.suptitle("")                                            # Tar bort "by sex"
+    plt.suptitle("")                                           
     plt.tight_layout()
     plt.show()
 
