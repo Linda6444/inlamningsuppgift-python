@@ -57,14 +57,14 @@ def plot_smokers_bar(df):
     plt.show()
 
 # Simulering av sjukdom
-def simulate_disease_probability(df, n=1000, seed=42):
+def simulate_disease(df, n=1000, seed=42):
     p = df["disease"].mean()              
     np.random.seed(seed)
     simulated = np.random.binomial(1, p, n)
     return simulated.mean()
 
 # Konfidensintervall för systoliskt blodtryck
-def compute_ci_systolic_bp(df):
+def bp_ci(df):
     bp = df['systolic_bp'].dropna()
     mean_bp = bp.mean()
     se = bp.std(ddof=1) / len(bp)**0.5
@@ -85,8 +85,8 @@ def ttest_smokers(df):
 # Enkel linjär regression
 def simple_regression(df):
     df_clean = df.dropna(subset=['age','weight','systolic_bp'])
-    X = df_clean[['age','weight']]
+    x = df_clean[['age','weight']]
     y = df_clean['systolic_bp']
     model = LinearRegression()
-    model.fit(X,y)
+    model.fit(x,y)
     return model

@@ -23,15 +23,19 @@ class HealthAnalyzer:
     def bar_smokers(self):
         utils.plot_smokers_bar(self.df)
 
-    # Simulering
+  # Konfidensintervall systoliskt blodtryck
+    def ci_bp(self):
+        ci_low, ci_high = utils.bp_ci(self.df) 
+        print(f"95% CI för systoliskt blodtryck: [{ci_low:.2f}, {ci_high:.2f}]")
+        return ci_low, ci_high
+
     def simulate_disease(self, n=1000, seed=42):
-        return utils.simulate_disease_probability(self.df, n=n, seed=seed)
-    
-    # Hypotesprövning
+        return utils.simulate_disease(self.df, n=n, seed=seed)
+    # T-test
     def ttest_smokers(self):
         return utils.ttest_smokers(self.df)
-    
-    # Enkel regression
+
+    # Regression
     def regression_age_weight_bp(self):
         return utils.simple_regression(self.df)
 
