@@ -14,7 +14,6 @@ def compute_basic_stats(df, columns):
 }).round(2)
 
 # Histogram över systoliskt blodtryck
-# ---------------------------------------------------
 def plot_bp_hist(df):
     _, ax = plt.subplots(figsize=(8,5))  
     bp = df['systolic_bp'].dropna()       
