@@ -5,12 +5,13 @@ import pandas as pd
 # Klass för att analysera hälsodata.
 class HealthAnalyzer:   
 
-    def __init__(self, df: pd.DataFrame): 
-        self.df = df # sparar DataFrame som attribut
+   
+    def __init__(self, df):
+        self.df = df
 
- # Statistik - Beräknar medel, median, min och max för valda kolumner"
     def stats(self, columns):
-        return utils.compute_basic_stats(self.df.columns)
+        return utils.compute_basic_stats(self.df, columns)
+
 
   # Grafer
     def histogram_bp(self):
