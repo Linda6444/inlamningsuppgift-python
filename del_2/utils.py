@@ -44,6 +44,7 @@ def plot_weight_boxplot(df):
     plt.show()
 
 # Stapeldiagram för rökare
+def plot_smokers_bar(df):
     fig, ax = plt.subplots(figsize=(8,5))
     smoker_clean = df['smoker'].astype(str).str.strip().str.lower().map({'yes':'Yes','no':'No'})
     counts = smoker_clean.value_counts().sort_index()
