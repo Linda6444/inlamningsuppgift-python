@@ -16,7 +16,7 @@ def compute_basic_stats(df, columns):
 # Histogram över systoliskt blodtryck
 # ---------------------------------------------------
 def plot_bp_hist(df):
-    fig, ax = plt.subplots(figsize=(8,5))  
+    _, ax = plt.subplots(figsize=(8,5))  
     bp = df['systolic_bp'].dropna()       
     ax.hist(bp, bins=20, color='skyblue', edgecolor='black') 
     ax.set_title("Histogram av systoliskt blodtryck")
@@ -28,7 +28,7 @@ def plot_bp_hist(df):
 
 # Boxplot för vikt per kön
 def plot_weight_boxplot(df):
-    fig, ax = plt.subplots(figsize=(8,5))
+    _, ax = plt.subplots(figsize=(8,5))
     df_box = df[['weight','sex']].dropna()                    
     df_box.boxplot(column='weight', by='sex', ax=ax, patch_artist=True,
                    boxprops=dict(facecolor='lightgreen', color='black'),
@@ -45,7 +45,7 @@ def plot_weight_boxplot(df):
 
 # Stapeldiagram för rökare
 def plot_smokers_bar(df):
-    fig, ax = plt.subplots(figsize=(8,5))
+    _, ax = plt.subplots(figsize=(8,5))
     smoker_clean = df['smoker'].astype(str).str.strip().str.lower().map({'yes':'Yes','no':'No'})
     counts = smoker_clean.value_counts().sort_index()
     ax.bar(counts.index, counts.values, color='salmon', edgecolor='black', width=0.6)
