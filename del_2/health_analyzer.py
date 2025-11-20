@@ -48,6 +48,15 @@ class HealthAnalyzer:
     def regression_age_weight_bp(self):
         return utils.simple_regression(self.df)
 
+    # Regression - graf
+    def plot_regression(self):
+        model = self.regression_age_weight_bp()
+        utils.plot_regression(self.df, model)
+
+        
+
+
+
     
 
 

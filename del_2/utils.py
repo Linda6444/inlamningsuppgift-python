@@ -121,3 +121,26 @@ def simple_regression(df):
     model = LinearRegression()
     model.fit(x,y)
     return model
+
+# Regression: scatter + prediktionslinje
+
+def plot_regression(df, model):
+    _, ax = plt.subplots(figsize=(8,5))
+    ax.scatter(df['age'], df['systolic_bp'], alpha=0.6, label="Data")
+
+    df_clean = df.dropna(subset=['age','weight','systolic_bp'])
+    ages = np.linspace(df_clean['age'].min(), df_clean['age'].max(), 100)
+    weight_mean = df_clean['weight'].mean()
+    X_pred = pd.DataFrame({'age': ages, 'weight': weight_mean})
+    y_pred = model.predict(X_pred)
+
+    ax.plot(ages, y_pred, color='red', label="Regression")
+    ax.set_title("Ålder vs Systoliskt blodtryck med regression")
+    ax.set_xlabel("Ålder")
+    ax.set_ylabel("Systoliskt blodtryck")
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend()
+    plt.tight_layout()
+    plt.show()
+
+
