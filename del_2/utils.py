@@ -135,7 +135,7 @@ def plot_regression(df, model):
     y_pred = model.predict(X_pred)
 
     ax.plot(ages, y_pred, color='red', label="Regression")
-    ax.set_title("Ålder vs Systoliskt blodtryck med regression")
+    ax.set_title("Ålder & Vikt vs Systoliskt blodtryck med regression")
     ax.set_xlabel("Ålder")
     ax.set_ylabel("Systoliskt blodtryck")
     ax.grid(True, linestyle='--', alpha=0.7)
