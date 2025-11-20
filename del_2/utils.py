@@ -93,6 +93,25 @@ def ttest_smokers(df):
     t_stat, p_value = stats.ttest_ind(bp_smokers, bp_nonsmokers, equal_var=False)
     return t_stat, p_value, len(bp_smokers), len(bp_nonsmokers)
 
+# Histogram för systoliskt blodtryck – rökare vs icke-rökare
+def plot_bp_hist_smoker_groups(df):
+    df['smoker'] = df['smoker'].str.strip().str.lower()
+    df_clean = df[['systolic_bp','smoker']].dropna()
+
+    bp_smokers = df_clean[df_clean['smoker']=='yes']['systolic_bp']
+    bp_nonsmokers = df_clean[df_clean['smoker']=='no']['systolic_bp']
+
+    fig, ax = plt.subplots(figsize=(8,5))
+    ax.hist(bp_smokers, bins=25, alpha=0.6, label='Rökare', color='darkred')
+    ax.hist(bp_nonsmokers, bins=25, alpha=0.4, label='Icke-rökare', color='red')
+
+    ax.set_title("Histogram systoliskt blodtryck – rökare vs icke-rökare")
+    ax.set_xlabel("Blodtryck")
+    ax.set_ylabel("Antal deltagare")
+    ax.grid(True, axis='y', linestyle='--', alpha=0.7)
+    ax.legend()
+    plt.tight_layout()
+    plt.show()
 
 # Enkel linjär regression
 def simple_regression(df):

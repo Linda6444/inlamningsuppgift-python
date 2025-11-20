@@ -38,6 +38,11 @@ class HealthAnalyzer:
     # Hypotestest / t-test
     def ttest_smokers(self):
         return utils.ttest_smokers(self.df)
+    
+    # Histogram för systoliskt blodtryck – rökare vs icke-rökare
+    def histogram_smoker_groups(self):
+        utils.plot_bp_hist_smoker_groups(self.df)
+
 
     # Regression
     def regression_age_weight_bp(self):
