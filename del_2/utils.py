@@ -55,6 +55,19 @@ def plot_smokers_bar(df):
     plt.tight_layout()
     plt.show()
 
+# Scatterpot för ålder vs blodtrtyck
+def scatter_age_bp(df):
+    fig, ax = plt.subplots()
+    ax.scatter(df['age'], df['systolic_bp'], alpha=0.6)
+    ax.set_title("Ålder vs Systoliskt blodtryck")
+    ax.set_xlabel("Ålder")
+    ax.set_ylabel("Systoliskt blodtryck")
+    ax.grid(True, linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
+
+
+
 # Simulering av sjukdom
 def simulate_disease(df, n=1000, seed=42):
     p = df["disease"].mean()              

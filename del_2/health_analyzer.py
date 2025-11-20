@@ -1,5 +1,4 @@
 import utils
-import pandas as pd
 
 
 # Klass för att analysera hälsodata.
@@ -23,6 +22,9 @@ class HealthAnalyzer:
     def bar_smokers(self):
         utils.plot_smokers_bar(self.df)
 
+    def scatter_age_bp(self):
+        utils.scatter_age_bp(self.df)
+
   # Simulering
     def simulate_disease(self, n=1000, seed=42):
         return utils.simulate_disease(self.df, n=n, seed=seed)
@@ -33,7 +35,7 @@ class HealthAnalyzer:
         print(f"95% CI för systoliskt blodtryck: [{ci_low:.2f}, {ci_high:.2f}]")
         return ci_low, ci_high
 
-    # Hypotestest
+    # Hypotestest / t-test
     def ttest_smokers(self):
         return utils.ttest_smokers(self.df)
 
