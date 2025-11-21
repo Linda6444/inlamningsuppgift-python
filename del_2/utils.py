@@ -4,17 +4,32 @@ import numpy as np
 from scipy import stats
 from sklearn.linear_model import LinearRegression
 
-#Beräknar medel, median, min och max för valda kolumner.
 def compute_basic_stats(df, columns):
+    """
+    Beräknar medelvärde, median, min och max för angivna kolumner i ett DataFrame.
+
+    Args:
+        df (DataFrame): Dataset med kolumner att analysera.
+        columns (list): Lista med kolumnnamn.
+
+    Returns:
+        DataFrame: Statistik (medel, median, min, max) för kolumnerna.
+    """
     return pd.DataFrame({
-    'Medel': df[columns].mean(),
-    'Median': df[columns].median(),
-    'Min': df[columns].min(),
-    'Max': df[columns].max()
+        'Medel': df[columns].mean(),
+        'Median': df[columns].median(),
+        'Min': df[columns].min(),
+        'Max': df[columns].max()
 }).round(2)
 
-# Histogram över systoliskt blodtryck
+
 def plot_bp_hist(df):
+    """
+    Skapar ett histogram över systoliskt blodtryck.
+
+    Args:
+        df (DataFrame): Dataset med kolumnen 'systolic_bp'.
+    """
     _, ax = plt.subplots(figsize=(8,5))  
     bp = df['systolic_bp'].dropna()       
     ax.hist(bp, bins=20, color='skyblue', edgecolor='black') 
@@ -25,8 +40,14 @@ def plot_bp_hist(df):
     plt.tight_layout()
     plt.show() 
 
-# Boxplot för vikt per kön
+
 def plot_weight_boxplot(df):
+    """
+    Skapar en boxplot över vikt uppdelad på kön.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'weight' och 'sex'.
+    """
     _, ax = plt.subplots(figsize=(8,5))
     df_box = df[['weight','sex']].dropna()                    
     df_box.boxplot(column='weight', by='sex', ax=ax, patch_artist=True,
@@ -42,8 +63,14 @@ def plot_weight_boxplot(df):
     plt.tight_layout()
     plt.show()
 
-# Stapeldiagram för rökare
+
 def plot_smokers_bar(df):
+    """
+    Skapar ett stapeldiagram över andelen rökare och icke-rökare.
+
+    Args:
+        df (DataFrame): Dataset med kolumnen 'smoker'.
+    """
     _, ax = plt.subplots(figsize=(8,5))
     smoker_clean = df['smoker'].astype(str).str.strip().str.lower().map({'yes':'Yes','no':'No'})
     counts = smoker_clean.value_counts().sort_index()
@@ -55,8 +82,14 @@ def plot_smokers_bar(df):
     plt.tight_layout()
     plt.show()
 
-# Scatterpot för ålder vs blodtrtyck
+
 def scatter_age_bp(df):
+    """
+    Skapar en scatterplot av ålder mot systoliskt blodtryck.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'age' och 'systolic_bp'.
+    """
     fig, ax = plt.subplots()
     ax.scatter(df['age'], df['systolic_bp'], alpha=0.6)
     ax.set_title("Ålder vs Systoliskt blodtryck")
@@ -67,16 +100,34 @@ def scatter_age_bp(df):
     plt.show()
 
 
-
-# Simulering av sjukdom
 def simulate_disease(df, n=1000, seed=42):
+    """
+    Simulerar sjukdomsförekomst baserat på verklig andel i datasetet.
+
+    Args:
+        df (DataFrame): Dataset med kolumnen 'disease'.
+        n (int): Antal personer som ska simuleras - 1000.
+        seed (int): Seed för slump för reproducerbarhet.
+
+    Returns:
+        float: Simulerad andel personer med sjukdom.
+    """
     p = df["disease"].mean()              
     np.random.seed(seed)
     simulated = np.random.binomial(1, p, n)
     return simulated.mean()
 
-# Konfidensintervall för systoliskt blodtryck
+
 def bp_ci(df):
+    """
+    Beräknar 95% konfidensintervall för medelvärdet av systoliskt blodtryck.
+
+    Args:
+        df (DataFrame): Dataset med kolumnen 'systolic_bp'.
+
+    Returns:
+        tuple: Nedre och övre gräns för CI.
+    """
     bp = df['systolic_bp'].dropna()
     mean_bp = bp.mean()
     se = bp.std(ddof=1) / len(bp)**0.5
@@ -84,8 +135,17 @@ def bp_ci(df):
     ci_upper = mean_bp + 1.96 * se
     return ci_lower, ci_upper
 
-# Hypotesprövning rökare vs icke-rökare
+
 def ttest_smokers(df):
+    """
+    Utför t-test för att jämföra blodtryck mellan rökare och icke-rökare.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'systolic_bp' och 'smoker'.
+
+    Returns:
+        tuple: t-statistik, p-värde, antal rökare, antal icke-rökare
+    """
     df['smoker'] = df['smoker'].str.strip().str.lower()
     df_clean = df[['systolic_bp','smoker']].dropna()
     bp_smokers = df_clean[df_clean['smoker']=='yes']['systolic_bp']
@@ -93,8 +153,14 @@ def ttest_smokers(df):
     t_stat, p_value = stats.ttest_ind(bp_smokers, bp_nonsmokers, equal_var=False)
     return t_stat, p_value, len(bp_smokers), len(bp_nonsmokers)
 
-# Histogram för systoliskt blodtryck – rökare vs icke-rökare
+
 def plot_bp_hist_smoker_groups(df):
+    """
+    Skapar ett dubbelhistogram av systoliskt blodtryck för rökare och icke-rökare.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'systolic_bp' och 'smoker'.
+    """
     df['smoker'] = df['smoker'].str.strip().str.lower()
     df_clean = df[['systolic_bp','smoker']].dropna()
 
@@ -113,8 +179,17 @@ def plot_bp_hist_smoker_groups(df):
     plt.tight_layout()
     plt.show()
 
-# Enkel linjär regression
+
 def simple_regression(df):
+    """
+    Utför en enkel linjär regression för att visa blodtryck baserat på ålder och vikt.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'age', 'weight', 'systolic_bp'.
+
+    Returns:
+        LinearRegression: Tränad regressionsmodell.
+    """
     df_clean = df.dropna(subset=['age','weight','systolic_bp'])
     x = df_clean[['age','weight']]
     y = df_clean['systolic_bp']
@@ -122,9 +197,17 @@ def simple_regression(df):
     model.fit(x,y)
     return model
 
-# Regression: scatter + prediktionslinje
 
 def plot_regression(df, model):
+    """
+    Skapar scatterplot av ålder vs blodtryck med regressionslinje.
+
+    Prediktionen baseras på medelvärdet av vikt.
+
+    Args:
+        df (DataFrame): Dataset med kolumnerna 'age', 'weight', 'systolic_bp'.
+        model (LinearRegression): Tränad regressionsmodell.
+    """
     _, ax = plt.subplots(figsize=(8,5))
     ax.scatter(df['age'], df['systolic_bp'], alpha=0.6, label="Data")
 
