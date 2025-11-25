@@ -161,6 +161,7 @@ def plot_bp_hist_smoker_groups(df):
     Args:
         df (DataFrame): Dataset med kolumnerna 'systolic_bp' och 'smoker'.
     """
+    df = df.copy()
     df['smoker'] = df['smoker'].str.strip().str.lower()
     df_clean = df[['systolic_bp','smoker']].dropna()
 
